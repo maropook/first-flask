@@ -10,6 +10,7 @@
 
 <body>
     <!-- http://127.0.0.1:5000/index?name=kyo -->
+    <a href="/logout">ログアウトする</a>
 
     {% if name == "kyo"%}
     <h1>スペシャル{{name}}</h1>
@@ -21,7 +22,8 @@
     {% endif %}
 
 
-    {% for word in okyo %}
+{% for onegai in all_onegai %}
+    <p>{{onegai.title}}:{{onegai.body}}:{{onegai.date}}</p>
     <p>{{word}}</p>
     {% endfor %}
 
@@ -31,10 +33,31 @@
     <img src="/static/images/maropook.jpg" alt="">
 
     <h2>フォーム</h2>
-    <form action="/index" method="POST">
-        <input type="text" name="name" placeholder="Enter name">
-        <input type="submit" value="Submit">
+
+    <form action="/add" method="post">
+        <input type="text" name="title" placeholder="title">
+        <input type="text" name="body" placeholder="body">
+        <input type="submit" value="Add" >
     </form>
+
+    <form action="/update" method="post" id ="update">
+        <input type="text" name="title" placeholder="title">
+        <input type="text" name="body" placeholder="body">
+        <input type="submit" value="Update">
+            </form>
+    <form action="/delete" method="post" id="delete">
+        <input type="submit" value="Delete Selected">
+    </form>
+
+        {% for onegai in all_onegai %}
+
+        <div>
+            <input type="radio" name="update" form="update" value="{{onegai.id}}">
+       <input type="checkbox" name="delete" form="delete" value="{{onegai.id}}">
+            {{onegai.title}}:{{onegai.body}}({{onegai.date}})
+        </div>
+        {% endfor %}
+
 </body>
 
 </html>
